@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
-from lib.globals import *
+from lib import *
 
-print (get_config())
+print(Globals.get_instance().__dict__)
+
+cfg_parser = ConfigParser()
+for action in cfg_parser.actions:
+    action.execute()

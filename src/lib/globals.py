@@ -1,25 +1,35 @@
 #!/usr/bin/python
-import sys
-import os.path
-import yaml
+from lib.singleton import *
+import getpass
+import os
+import pwd
+import platform
 
-def get_config_file():
-    arguments = sys.argv
-    if len(arguments) <= 1:
-        raise Exception("No config file specified!")
-    config_file = arguments[1]
-    if not os.path.isfile(config_file):
-        raise Exception("Specified config \"%s\" does not exist!" % config_file)
+@Singleton
+class Globals:
+    user_variable = "USER"
+    home_variable = "HOME"
+    distro_variable = "DISTRO"
+    package_manager_variable = "PCK_MANAGER"
 
-    return config_file
+    def __init__(self):
+        setattr(self, self.user_variable, os.getlogin())
+        setattr(self, self.home_variable, os.path.expanduser("~%s" % self.get_attr("USER")))
+        setattr(self, self.distro_variable, platform.dist()[0])
+        setattr(self, self.package_manager_variable, self.determine_package_manager(self.get_attr("DISTRO")))
 
-def get_config():
-    config_file_path = get_config_file()
-    with open(config_file_path, 'r') as stream:
-        try:
-            return yaml.load(stream)
-        except yaml.YAMLError as exc:
-            raise Exception("Couldn't load the config file \"%s\"" % config_file_path)
+    def get_attr(self, attr_name):
+        final_attr_name = attr_name.upper()
+        if hasattr(self, final_attr_name):
+            return getattr(self, final_attr_name);
+        return None
 
+    def determine_package_manager(self, distro_name):
+        if platform.system() != "Linux":
+            raise Exception("Not supported system %s!" % platform.system())
 
+        ## TODO
+        return "test"
 
+    def get_available_variables(self):
+        return self.__dict__

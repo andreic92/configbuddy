@@ -1,3 +1,9 @@
-- bashrc:
-  - hidden: true
-    destination: $HOME
+- FileAction:
+  - bashrc:
+    - hidden: true
+      command: ln -s
+      destination: $HOME
+
+- PackageAction:
+  - i3:
+    - alternatives: i3wm
