@@ -2,7 +2,7 @@
   - bashrc:
     - hidden: true
       command: ln -s
-      destination: $HOME
+      destination: $HOME/Documents/
 
 - PackageAction:
   - i3:

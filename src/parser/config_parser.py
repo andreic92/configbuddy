@@ -3,12 +3,13 @@
 import sys
 import os.path
 import yaml
-from lib import *
+from action import *
 
 class ConfigParser:
 
     """ On init read the config file and prepare the "self" values for "configs" and "packages"! """
     def __init__(self):
+        self.config_path = os.path.dirname(self.__get_config_file())
         self.actions = self.__build_actions()
 
     """ Get the config file path from app arguments """

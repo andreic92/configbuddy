@@ -1,12 +1,12 @@
 #!/usr/bin/python
-from lib.singleton import *
+from common.singleton import *
 import getpass
 import os
 import pwd
 import platform
 
 @Singleton
-class Globals:
+class Constants:
     user_variable = "USER"
     home_variable = "HOME"
     distro_variable = "DISTRO"

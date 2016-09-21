@@ -1,5 +1,4 @@
 #!/usr/bin/python
-
 __all__ = []
 
 import pkgutil
