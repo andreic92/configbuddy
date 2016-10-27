@@ -2,7 +2,8 @@
   - bashrc:
     - hidden: true
       command: ln -s
-      destination: $HOME/Documents/
+      destination: $HOME/testing
+      parse_child: true
 
 - PackageAction:
   - i3:

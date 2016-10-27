@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 
 from common import *
-import os.path 
 
 class BaseAction(ABC):
 
@@ -52,6 +51,3 @@ class BaseAction(ABC):
 
     def set_attribute(self, key, value):
         setattr(self, key, value)
-
-    def get_full_path(self, path):
-        return os.path.abspath(path)

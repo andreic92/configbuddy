@@ -39,3 +39,8 @@ class ConfigParser:
             action_name = list(cfg.keys())[0]
             actions.append(globals()[action_name](cfg[action_name]))
         return actions
+    
+    def set_variables_on(self, constants, exceptions_handler):
+        setattr(constants, 'conf_dir', self.config_path)
+
+        setattr(exceptions_handler, "interrupt", "false")

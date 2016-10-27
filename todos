@@ -1,1 +1,2 @@
 file action for github - maybe another action?
+add in config a globals section(for the moment what to do on exception...ignore command, interrup exec)
