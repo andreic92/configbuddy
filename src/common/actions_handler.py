@@ -13,4 +13,4 @@ class ActionsHandler:
             command = action.get_command()
             if not command:
                 continue
-            execute_command(command)
+#            execute_command(command)

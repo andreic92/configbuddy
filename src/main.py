@@ -2,7 +2,6 @@
 
 from parser.config_parser import *
 
-#print(Globals.get_instance().__dict__)
 constants = Constants.get_instance()
 exceptions_handler = ExceptionsHandler.get_instance()
 

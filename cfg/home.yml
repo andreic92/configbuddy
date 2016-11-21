@@ -1,3 +1,5 @@
+- Globals:
+  - exitOnError: false
 - FileAction:
   - bashrc:
     - hidden: true
