@@ -1,0 +1,12 @@
+#!/bin/bash
+
+current_dir=$(cd `dirname $0` && pwd)
+
+cd $current_dir
+pwd
+if [ ! -d venv ]; then
+  echo "bau"
+  python -m venv venv
+fi
+
+source $current_dir/venv/bin/activate
