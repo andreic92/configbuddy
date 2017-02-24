@@ -11,6 +11,7 @@ class ActionsHandler:
             return
         for action in actions:
             command = action.get_command()
+            print(command)
             if not command:
                 continue
-#            execute_command(command)
+            execute_command(command)

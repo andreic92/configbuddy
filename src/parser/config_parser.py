@@ -37,17 +37,25 @@ class ConfigParser:
         config = self.__get_config()
         for cfg in config:
             action_name = list(cfg.keys())[0]
-            instance = globals()[action_name](cfg[action_name])
-            if isinstance(instance, Globals):
+            if action_name == "Globals":
+                instance = globals()[action_name](cfg[action_name])
                 self.__globals_config = instance
                 continue
-            actions.append(instance) # like saying e.g. FileAction(<descriptive_object - required>)
+            instances = self.__parse_current_action_content(action_name, cfg[action_name])
+            actions.extend(instances) # like saying e.g. FileAction(<descriptive_object - required>)
 
         self.__parse_globals_config();
         return actions
 
+    def __parse_current_action_content(self, action_name, action_config_content):
+        instances = []
+        for individual_action_data in action_config_content:
+            instance = globals()[action_name](individual_action_data)
+            instances.append(instance)
+        return instances
+
     def __parse_globals_config(self):
-        print(self.__globals_config.config)
+        pass #print(self.__globals_config.config)
     
     def set_variables_on(self, constants, exceptions_handler):
         setattr(constants, 'conf_dir', self.config_path)

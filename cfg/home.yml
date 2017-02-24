@@ -5,7 +5,34 @@
     - hidden: true
       command: ln -s
       destination: $HOME/testing
-      parse_child: true
+  - bin:
+    - hidden: false
+      command: ln -s
+      destination: $HOME/testing
+  - atom:
+    - hidden: true
+      command: ln -s
+      destination: $HOME/testing
+  - common_exports:
+    - hidden: true
+      command: ln -s
+      destination: $HOME/testing
+  - common_system:
+    - hidden: true
+      command: ln -s
+      destination: $HOME/testing
+  - i3:
+    - hidden: false
+      command: ln -s
+      destination: $HOME/testing/.config
+  - dunst:
+    - hidden: false
+      command: ln -s
+      destination: $HOME/testing/.config
+  - tmux.conf:
+    - hidden: true
+      command: ln -s
+      destination: $HOME/testing
 
 - PackageAction:
   - i3:

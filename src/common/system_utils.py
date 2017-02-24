@@ -16,3 +16,9 @@ def execute_command(command):
 
 def list_files(path):
     return os.listdir(path)
+
+def create_directory(path):
+    os.makedirs(path)
+
+def exists_directory(path):
+    return os.path.exists(path)
