@@ -20,5 +20,8 @@ def list_files(path):
 def create_directory(path):
     os.makedirs(path)
 
-def exists_directory(path):
+def exists_file(path):
     return os.path.exists(path)
+
+def delete_file(path):
+    os.remove(path)

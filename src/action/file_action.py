@@ -14,14 +14,18 @@ class FileAction(BaseAction):
     def get_command(self):
         command = self.get_attribute('command')
         file_name = self.get_attribute('file_name')
-        file_path = get_full_path(Constants.get_instance().conf_dir + "/" + file_name)
-        destination = parse_destination_dir(self.get_attribute('destination'))
+        source_relative = self.get_attribute('source')
+        file_path = get_full_path(Constants.get_instance().conf_dir + "/" + source_relative + "/" + file_name)
+        destination = parse_dir(self.get_attribute('destination'))
+        final_destination = destination + self.__get_file_name() 
+        if exists_file(final_destination):
+            delete_file(final_destination)
         """ if parse_child attribute is present create commands for the each file contained in the current director """
         if self.get_attribute('parse_child'):
             return self.__generate_child_commands(command, file_path, destination)
 
         self.__create_destination(destination)
-        return "%s %s %s" % (command, file_path, destination + self.__get_file_name())
+        return "%s %s %s" % (command, file_path, final_destination)
 
     def __generate_child_commands(self, command, parent_path, destination):
         try:
@@ -43,5 +47,5 @@ class FileAction(BaseAction):
         return file_name
 
     def __create_destination(self, destination):
-        if not exists_directory(destination):
+        if not exists_file(destination):
             create_directory(destination)

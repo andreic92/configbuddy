@@ -1,2 +1,4 @@
 file action for github - maybe another action?
 add in config a globals section(for the moment what to do on exception...ignore command, interrup exec)
+
+there seems to be an issue when the wanted final_destination is a directory or a bad link (red one)
