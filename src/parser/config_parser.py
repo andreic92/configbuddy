@@ -3,6 +3,7 @@
 import sys
 import os.path
 import yaml
+from common import globals_config
 from action import *
 
 class ConfigParser:
@@ -38,13 +39,13 @@ class ConfigParser:
         for cfg in config:
             action_name = list(cfg.keys())[0]
             if action_name == "Globals":
-                instance = globals()[action_name](cfg[action_name])
+                instance = globals_config.Globals(cfg[action_name])
                 self.__globals_config = instance
                 continue
             instances = self.__parse_current_action_content(action_name, cfg[action_name])
             actions.extend(instances) # like saying e.g. FileAction(<descriptive_object - required>)
 
-        self.__parse_globals_config();
+        self.__parse_globals_config()
         return actions
 
     def __parse_current_action_content(self, action_name, action_config_content):

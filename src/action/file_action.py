@@ -1,7 +1,10 @@
 #!/usr/bin/python
 
 from action import *
-from common import *
+from common import system_utils
+from common import utils
+from common import constants
+from common import exceptions_handler
 
 class FileAction(BaseAction):
 
@@ -15,11 +18,11 @@ class FileAction(BaseAction):
         command = self.get_attribute('command')
         file_name = self.get_attribute('file_name')
         source_relative = self.get_attribute('source')
-        file_path = get_full_path(Constants.get_instance().conf_dir + "/" + source_relative + "/" + file_name)
-        destination = parse_dir(self.get_attribute('destination'))
+        file_path = system_utils.get_full_path(constants.Constants.get_instance().conf_dir + "/" + source_relative + "/" + file_name)
+        destination = utils.parse_dir(self.get_attribute('destination'))
         final_destination = destination + self.__get_file_name() 
-        if exists_file(final_destination):
-            delete_file(final_destination)
+        if system_utils.exists_file(final_destination):
+            system_utils.delete_file(final_destination)
         """ if parse_child attribute is present create commands for the each file contained in the current director """
         if self.get_attribute('parse_child'):
             return self.__generate_child_commands(command, file_path, destination)
@@ -29,9 +32,9 @@ class FileAction(BaseAction):
 
     def __generate_child_commands(self, command, parent_path, destination):
         try:
-            print(list_files(parent_path))
+            print(system_utils.list_files(parent_path))
         except NotADirectoryError as directory_exception:
-            ExceptionsHandler.get_instance().handle(directory_exception)
+            exceptions_handler.ExceptionsHandler.get_instance().handle(directory_exception)
 
     def parse_content(self, content):
         for file_name, properties in content.items():
@@ -47,5 +50,5 @@ class FileAction(BaseAction):
         return file_name
 
     def __create_destination(self, destination):
-        if not exists_file(destination):
-            create_directory(destination)
+        if not system_utils.exists_file(destination):
+            system_utils.create_directory(destination)
