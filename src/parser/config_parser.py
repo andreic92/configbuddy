@@ -3,8 +3,10 @@
 import sys
 import os.path
 import yaml
-from common import globals_config
+from common.globals_config import Globals
 from action import *
+from common.application_context import ApplicationContext
+import logging
 
 class ConfigParser:
 
@@ -12,6 +14,7 @@ class ConfigParser:
     def __init__(self):
         self.config_path = os.path.dirname(self.__get_config_file())
         self.actions = self.__build_actions()
+        self.set_variables_on_context()
 
     """ Get the config file path from app arguments """
     def __get_config_file(self):
@@ -39,26 +42,25 @@ class ConfigParser:
         for cfg in config:
             action_name = list(cfg.keys())[0]
             if action_name == "Globals":
-                instance = globals_config.Globals(cfg[action_name])
-                self.__globals_config = instance
+                logging.debug(action_name + " has the following config " + str(cfg[action_name]))
+                instance = Globals(cfg[action_name])
+                ApplicationContext.get_instance().global_config = instance
                 continue
             instances = self.__parse_current_action_content(action_name, cfg[action_name])
             actions.extend(instances) # like saying e.g. FileAction(<descriptive_object - required>)
-
-        self.__parse_globals_config()
         return actions
 
     def __parse_current_action_content(self, action_name, action_config_content):
         instances = []
         for individual_action_data in action_config_content:
+            logging.debug(action_name + " has the following config " + str(individual_action_data))
             instance = globals()[action_name](individual_action_data)
             instances.append(instance)
         return instances
 
-    def __parse_globals_config(self):
-        pass #print(self.__globals_config.config)
-    
-    def set_variables_on(self, constants, exceptions_handler):
-        setattr(constants, 'conf_dir', self.config_path)
+    def set_variables_on_context(self):
+        appContext = ApplicationContext.get_instance()
+        setattr(appContext.constants, 'conf_dir', self.config_path)
 
-        setattr(exceptions_handler, "interrupt", "false")
+        interrupt_on_exception = hasattr(appContext.global_config, 'exitOnError') and appContext.global_config.exitOnError is True
+        setattr(appContext.exceptions_handler, "interrupt", interrupt_on_exception) 

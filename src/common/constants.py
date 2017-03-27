@@ -1,11 +1,10 @@
 #!/usr/bin/python
-from common.singleton import *
+
 import getpass
 import os
 import pwd
 import platform
 
-@Singleton
 class Constants:
     user_variable = "USER"
     home_variable = "HOME"
@@ -13,7 +12,7 @@ class Constants:
     package_manager_variable = "PCK_MANAGER"
 
     def __init__(self):
-        setattr(self, self.user_variable, os.getlogin())
+        setattr(self, self.user_variable, getpass.getuser())
         setattr(self, self.home_variable, os.path.expanduser("~%s" % self.get_attr("USER")))
         setattr(self, self.distro_variable, platform.dist()[0])
         setattr(self, self.package_manager_variable, self.determine_package_manager(self.get_attr("DISTRO")))

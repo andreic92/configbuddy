@@ -2,9 +2,7 @@
 
 from action import *
 from common import system_utils
-from common import utils
-from common import constants
-from common import exceptions_handler
+from common.application_context import ApplicationContext
 
 class FileAction(BaseAction):
 
@@ -18,8 +16,9 @@ class FileAction(BaseAction):
         command = self.get_attribute('command')
         file_name = self.get_attribute('file_name')
         source_relative = self.get_attribute('source')
-        file_path = system_utils.get_full_path(constants.Constants.get_instance().conf_dir + "/" + source_relative + "/" + file_name)
-        destination = utils.parse_dir(self.get_attribute('destination'))
+        
+        file_path = system_utils.get_full_path(ApplicationContext.get_instance().constants.conf_dir + "/" + source_relative + "/" + file_name)
+        destination = system_utils.parse_dir(self.get_attribute('destination'))
         final_destination = destination + self.__get_file_name() 
         if system_utils.exists_file(final_destination):
             system_utils.delete_file(final_destination)
@@ -34,7 +33,7 @@ class FileAction(BaseAction):
         try:
             print(system_utils.list_files(parent_path))
         except NotADirectoryError as directory_exception:
-            exceptions_handler.ExceptionsHandler.get_instance().handle(directory_exception)
+            ApplicationContext.get_instance().exceptions_handler.handle(directory_exception)
 
     def parse_content(self, content):
         for file_name, properties in content.items():

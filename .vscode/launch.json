@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Python",
+            "type": "python",
+            "request": "launch",
+            "stopOnEntry": false,
+            "console": "integratedTerminal",
+            "pythonPath": "/usr/bin/python",
+            "program": "${workspaceRoot}/src/main.py",
+            "cwd": "${workspaceRoot}",
+            "env": null,
+            "args": [
+                "/home/enraid/testing/dotfiles/configs/home.yml"
+            ],
+            "envFile": "${workspaceRoot}/.env",
+            "debugOptions": [
+                "WaitOnAbnormalExit",
+                "WaitOnNormalExit",
+                "RedirectOutput"
+            ]
+        }
+    ]
+}

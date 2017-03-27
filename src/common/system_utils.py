@@ -21,7 +21,12 @@ def create_directory(path):
     os.makedirs(path)
 
 def exists_file(path):
-    return os.path.exists(path)
+    return os.path.lexists(path)
 
 def delete_file(path):
     os.remove(path)
+
+def parse_dir(directory):
+    if directory.endswith('/'):
+        return directory
+    return directory + '/'

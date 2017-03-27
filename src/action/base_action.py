@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from common import constants
+from common.application_context import ApplicationContext
 
 class BaseAction(ABC):
 
@@ -35,7 +35,7 @@ class BaseAction(ABC):
     """
     def __replace_constants(self):
         for attr in self.get_attrs_to_be_parsed():
-            for key, value in constants.Constants.get_instance().get_available_variables().items():
+            for key, value in ApplicationContext.get_instance().constants.get_available_variables().items():
                 current_value = self.get_attribute(attr)
                 self.set_attribute(attr, current_value.replace("$%s" % key, value))
 

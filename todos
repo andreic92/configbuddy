@@ -1,4 +1,13 @@
 file action for github - maybe another action?
-add in config a globals section(for the moment what to do on exception...ignore command, interrup exec)
+package action - alternatives for same package or another package alternative; e.g.:parcellite alternative to klipper
+package action - from package manager or from package file (deb, rpm, etc)
+package action - possiblity to download the specified file from an URL (google drive, dropbox, ftp, etc)
 
+
+FIXED
+##
 there seems to be an issue when the wanted final_destination is a directory or a bad link (red one)
+# problem was in system_utils#exists_file - exists function returns false if the symlink is broken. lexists is the right choice
+##
+add in config a globals section(for the moment what to do on exception...ignore command, interrup exec)
+# Done
