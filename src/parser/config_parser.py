@@ -60,7 +60,4 @@ class ConfigParser:
 
     def set_variables_on_context(self):
         appContext = ApplicationContext.get_instance()
-        setattr(appContext.constants, 'conf_dir', self.config_path)
-
-        interrupt_on_exception = hasattr(appContext.global_config, 'exitOnError') and appContext.global_config.exitOnError is True
-        setattr(appContext.exceptions_handler, "interrupt", interrupt_on_exception) 
+        setattr(appContext.global_config, 'conf_dir', self.config_path)

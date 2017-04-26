@@ -1,8 +1,8 @@
+config file dependencies. eg: i3 depends on general (general containing only global configs: zsh, terminal configs, etc) and i3 containing only i3 specific configs
 file action for github - maybe another action?
 package action - alternatives for same package or another package alternative; e.g.:parcellite alternative to klipper
 package action - from package manager or from package file (deb, rpm, etc)
 package action - possiblity to download the specified file from an URL (google drive, dropbox, ftp, etc)
-
 
 FIXED
 ##

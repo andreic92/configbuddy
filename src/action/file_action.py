@@ -17,7 +17,7 @@ class FileAction(BaseAction):
         file_name = self.get_attribute('file_name')
         source_relative = self.get_attribute('source')
         
-        file_path = system_utils.get_full_path(ApplicationContext.get_instance().constants.conf_dir + "/" + source_relative + "/" + file_name)
+        file_path = system_utils.get_full_path(ApplicationContext.get_instance().global_config.conf_dir + "/" + source_relative + "/" + file_name)
         destination = system_utils.parse_dir(self.get_attribute('destination'))
         final_destination = destination + self.__get_file_name() 
         if system_utils.exists_file(final_destination):
