@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 from parser.config_parser import ConfigParser
 from common.application_context import ApplicationContext

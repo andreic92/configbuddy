@@ -41,7 +41,9 @@ class Constants:
         raise Exception("No package manager found!")
 
     def get_available_variables(self):
-        return self.__dict__
+        available_variables = dict(self.__dict__)
+        available_variables.pop(self.package_manager_class)
+        return available_variables
 
     def str_to_class(self, fully_qualified_name):
         module_name = fully_qualified_name.rsplit('.', 1)[0]

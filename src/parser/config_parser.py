@@ -29,32 +29,49 @@ class ConfigParser:
     """ Read the config file """
     def __get_config(self):
         config_file_path = self.__get_config_file()
-        with open(config_file_path, 'r') as stream:
-            try:
-                return yaml.load(stream)
-            except yaml.YAMLError as exc:
-                raise Exception("Couldn't load the config file \"%s\"" % config_file_path)
+                       
+        try:
+            cfg = yaml.load(open(config_file_path))                                                                                                                                                                                  
+            return self.__load_includes(cfg, self.config_path)
+        except yaml.YAMLError as exc:
+            raise Exception("Couldn't load the config file \"%s\"" % config_file_path)
+
+    """ Method responsible for loading the imports array """
+    def __load_includes(self, loaded_config, loaded_config_path):
+        if "includes" not in loaded_config:
+            return loaded_config
+
+        for include in loaded_config.get("includes", []):
+            include_loaded = yaml.load(open("%s/%s" % (loaded_config_path ,include)))
+            for key, val in include_loaded.items():
+                data = [] 
+                if key in loaded_config:
+                    data = loaded_config[key]
+                data.extend(val)
+                loaded_config[key] = data
+
+        loaded_config.pop('includes')
+        return loaded_config
 
     """ Method for building the classes responsible for different actions (FileAction, PackageAction)"""
     def __build_actions(self):
         actions = []
         config = self.__get_config()
-        for cfg in config:
-            action_name = list(cfg.keys())[0]
-            if action_name == "Globals":
-                logging.debug(action_name + " has the following config " + str(cfg[action_name]))
-                instance = Globals(cfg[action_name])
+        for key, val in config.items():
+            if key == "Globals":
+                logging.debug(key + " has the following config " + str(val))
+                instance = Globals(val)
                 ApplicationContext.get_instance().global_config = instance
                 continue
-            instances = self.__parse_current_action_content(action_name, cfg[action_name])
-            actions.extend(instances) # like saying e.g. FileAction(<descriptive_object - required>)
+            instances = self.__parse_current_action_content(key, val)
+            actions.extend(instances) 
         return actions
 
     def __parse_current_action_content(self, action_name, action_config_content):
         instances = []
         for individual_action_data in action_config_content:
             logging.debug(action_name + " has the following config " + str(individual_action_data))
-            instance = globals()[action_name](individual_action_data)
+            instance = globals()[action_name](individual_action_data)# like saying e.g. FileAction(<descriptive_object - required>)
             instances.append(instance)
         return instances
 
