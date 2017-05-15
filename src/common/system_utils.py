@@ -30,3 +30,6 @@ def parse_dir(directory):
     if directory.endswith('/'):
         return directory
     return directory + '/'
+
+def get_file_directory(path):
+    return os.path.dirname(path)

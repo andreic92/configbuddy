@@ -29,10 +29,12 @@ class ConfigParser:
     """ Read the config file """
     def __get_config(self):
         config_file_path = self.__get_config_file()
-                       
+        return self.__load_config(config_file_path)
+        
+    def __load_config(self, config_file_path):
         try:
-            cfg = yaml.load(open(config_file_path))                                                                                                                                                                                  
-            return self.__load_includes(cfg, self.config_path)
+            config = yaml.load(open(config_file_path))                                                                                                                                                                                  
+            return self.__load_includes(config, os.path.dirname(config_file_path))
         except yaml.YAMLError as exc:
             raise Exception("Couldn't load the config file \"%s\"" % config_file_path)
 
@@ -42,8 +44,8 @@ class ConfigParser:
             return loaded_config
 
         for include in loaded_config.get("includes", []):
-            include_loaded = yaml.load(open("%s/%s" % (loaded_config_path ,include)))
-            for key, val in include_loaded.items():
+            included_config = self.__load_config("%s/%s" % (loaded_config_path ,include))
+            for key, val in included_config.items():
                 data = [] 
                 if key in loaded_config:
                     data = loaded_config[key]
@@ -65,6 +67,7 @@ class ConfigParser:
                 continue
             instances = self.__parse_current_action_content(key, val)
             actions.extend(instances) 
+        quit()
         return actions
 
     def __parse_current_action_content(self, action_name, action_config_content):

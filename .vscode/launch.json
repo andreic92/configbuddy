@@ -8,12 +8,12 @@
             "request": "launch",
             "stopOnEntry": false,
             "console": "integratedTerminal",
-            "pythonPath": "/usr/bin/python",
+            "pythonPath": "/usr/bin/python3",
             "program": "${workspaceRoot}/src/main.py",
             "cwd": "${workspaceRoot}",
             "env": null,
             "args": [
-                "/home/enraid/testing/dotfiles/configs/home.yml"
+                "/home/enraid/testing/source/dotfiles/configs/home.yml"
             ],
             "envFile": "${workspaceRoot}/.env",
             "debugOptions": [
