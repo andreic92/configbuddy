@@ -67,7 +67,6 @@ class ConfigParser:
                 continue
             instances = self.__parse_current_action_content(key, val)
             actions.extend(instances) 
-        quit()
         return actions
 
     def __parse_current_action_content(self, action_name, action_config_content):
