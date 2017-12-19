@@ -26,4 +26,4 @@ ADD src $configbuddy_app
 # cleanup
 RUN rm -rf ${workdir}/tools
 
-ENTRYPOINT ["bash"]
+ENTRYPOINT "/bin/bash"
