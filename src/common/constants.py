@@ -31,7 +31,8 @@ class Constants:
         return None
 
     def determine_package_manager(self):
-        if platform.system() != "Linux":
+        # darwin is for mac os
+        if platform.system() != "Linux" and platform.system() != "Darwin":
             raise Exception("Not supported system %s!" % platform.system())
         
         for pck_man, class_string in get_registered_pck_man().items():
